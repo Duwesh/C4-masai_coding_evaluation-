@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart Page</title>
+    <link rel="stylesheet" href="style/cart.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="total-chart">
+        <label>Total Bill</label>
+        <div class="total-value"></div>
+      </div>
+      <a href="checkout.html"><button id="check">CHECKOUT</button></href></a>
+      <div class="cart-items"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let cartItems = document.querySelector(".cart-items");
+
+  let cart_arr = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  function displayCartItems(cart_arr) {
+    cart_arr.map(function (item, index) {
+      let div = document.createElement("div");
+      div.classList = "item-container";
+
+      let img = document.createElement("img");
+      img.src = item.strCategoryThumb;
+      //   img.src = item
+      let title = document.createElement("h3");
+      title.textContent = item.strCategory;
+
+      let price = document.createElement("h3");
+      price.textContent = Math.floor(Math.random() * 500);
+
+      let removeBtn = document.createElement("button");
+      removeBtn.classList = "remove-btn";
+      removeBtn.textContent = "REMOVE";
+
+      removeBtn.addEventListener("click", function () {
+        console.log("before removing", cart_arr);
+        deleteItem(index);
+      });
+
+      div.append(title, img, price, removeBtn);
+      cartItems.append(div);
+    });
+  }
+
+  let total = 0;
+  for (let i = 0; i < cart_arr.length; i++) {
+    total += Number(cart_arr[i].price);
+  }
+
+  document.querySelector(".total-value").textContent = total;
+
+  //displaying cart items
+  displayCartItems(cart_arr);
+
+  function deleteItem(index) {
+    cart_arr.splice(index, 1);
+    localStorage.setItem("cartItems", JSON.stringify(cart_arr));
+    document.querySelector(".cart-items").innerHTML = "";
+    displayCartItems(cart_arr);
+    console.log(cart_arr);
+    alert("item removed successfully!");
+  }
+</script>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu</title>
+    <link rel="stylesheet" href="style/menu.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="icon">
+        <label id="label">Total Items</label>
+        <div id="total-cart"></div>
+      </div>
+
+      <div class="dishes-container"></div>
+    </div>
+  </body>
+</html>
+<script>
+  let dishesContainer = document.querySelector(".dishes-container");
+  let cart_arr = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  //for fetching the data from the server
+  async function getDishes() {
+    try {
+      let url = `https://www.themealdb.com/api/json/v1/1/categories.php`;
+      let res = await fetch(url);
+      let data = await res.json();
+      addDishes(data.categories);
+      console.log("data", data.categories);
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  }
+  getDishes();
+
+  //for displaying dishes on the page
+  function addDishes(dishes_arr) {
+    dishes_arr.forEach(function (item) {
+      let div = document.createElement("div");
+      div.classList = "item-container";
+
+      let img = document.createElement("img");
+      img.src = item.strCategoryThumb;
+      //   img.src = item
+      let title = document.createElement("h3");
+      title.textContent = item.strCategory;
+
+      let price = document.createElement("h3");
+      price.textContent = Math.floor(Math.random() * 500);
+
+      let cartBtn = document.createElement("button");
+      cartBtn.classList = "cart-btn";
+      cartBtn.textContent = "Add To Cart";
+      cartBtn.addEventListener("click", function () {
+        addToCart(item);
+      });
+
+      div.append(title, img, price, cartBtn);
+      dishesContainer.append(div);
+    });
+  }
+
+  //   add to cart function for adding items
+  function addToCart(item) {
+    cart_arr.push(item);
+    localStorage.setItem("cartItems", JSON.stringify(cart_arr));
+    alert("item added to cart successfully!");
+    console.log(item);
+    window.location.href = "cart.html";
+  }
+
+  document.querySelector("#total-cart").textContent = cart_arr.length;
+</script>

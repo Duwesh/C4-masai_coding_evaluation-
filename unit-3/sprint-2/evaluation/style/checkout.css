@@ -1,0 +1,61 @@
+form > input {
+  justify-content: center;
+  display: block;
+  margin-bottom: 2%;
+}
+.cart-items {
+  display: grid;
+  grid-template-columns: repeat(3, 350px);
+  /* grid-template-rows: repeat(); */
+  gap: 2%;
+  /* justify-content: center; */
+  /* justify-items: center; */
+  align-items: center;
+  text-align: center;
+}
+.item-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid black;
+}
+img {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  margin: auto;
+}
+.remove-btn {
+  background-color: teal;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  justify-content: center;
+  width: 30%;
+  margin: auto;
+}
+.total-value {
+  border: 1px solid black;
+  width: 60px;
+  height: 20px;
+  margin-bottom: 2%;
+}
+.user-add,
+.cart-title {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: crimson;
+  text-decoration: underline;
+  margin-bottom: 2%;
+}
+
+.submit {
+  background-color: teal;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  /* justify-content: center; */
+  width: 30%;
+  margin: auto;
+}
